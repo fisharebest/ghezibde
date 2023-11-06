@@ -11,47 +11,39 @@ namespace Ghezibde;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomTrait;
+use Fisharebest\Webtrees\View;
 
 return new class extends AbstractModule implements ModuleCustomInterface {
     use ModuleCustomTrait;
 
-    /**
-     * How should this module be identified in the control panel, etc.?
-     *
-     * @return string
-     */
     public function title(): string
     {
         return 'Ghezibde';
     }
 
-    /**
-     * A sentence describing what this module does.
-     *
-     * @return string
-     */
     public function description(): string
     {
         return 'Modifications for Ghezibde';
     }
 
-    /**
-     * The person or organisation who created this module.
-     *
-     * @return string
-     */
     public function customModuleAuthorName(): string
     {
         return 'Greg Roach';
     }
 
-    /**
-     * Additional/updated translations.
-     *
-     * @param string $language
-     *
-     * @return string[]
-     */
+    public function boot(): void
+    {
+        View::registerNamespace(namespace: 'ghezibde', path: $this->resourcesFolder() . 'views/');
+
+        // Change the filed "input type=url" to restrict to paths containing "/ark:/".
+        View::registerCustomView(old: '::modals/media-file-fields', new: 'ghezibde::modals/media-file-fields');
+    }
+
+    public function resourcesFolder(): string
+    {
+        return __DIR__ . '/resources/';
+    }
+
     public function customTranslations(string $language): array
     {
         switch ($language) {
