@@ -11,7 +11,10 @@ namespace Ghezibde;
 use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomTrait;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\View;
+
+require __DIR__ . '/GhezibdeSurnameTradition.php';
 
 return new class extends AbstractModule implements ModuleCustomInterface {
     use ModuleCustomTrait;
@@ -37,6 +40,11 @@ return new class extends AbstractModule implements ModuleCustomInterface {
 
         // Change the filed "input type=url" to restrict to paths containing "/ark:/".
         View::registerCustomView(old: '::modals/media-file-fields', new: 'ghezibde::modals/media-file-fields');
+
+        Registry::surnameTraditionFactory()->register(
+            name: 'patrilineal-ghezibde',
+            surname_tradition: new GhezibdeSurnameTradition()
+        );
     }
 
     public function resourcesFolder(): string
