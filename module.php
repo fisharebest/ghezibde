@@ -14,7 +14,7 @@ use Fisharebest\Webtrees\Module\ModuleCustomTrait;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\View;
 
-require __DIR__ . '/GhezibdeSurnameTradition.php';
+require_once __DIR__ . '/GhezibdeSurnameTradition.php';
 
 return new class extends AbstractModule implements ModuleCustomInterface {
     use ModuleCustomTrait;
